@@ -4,7 +4,8 @@ This repo contains a small demo project that predicts chronological age from MRI
 
 **Main artifacts**
 - `BAG_Summary.pdf` — short results summary
-- `BAG_Pipeline.Rmd` — reproducible pipeline (synthetic data by default)
+- `BAG_Pipeline.html` - pre-rendered HTML report (synthetic data and opens without running code)
+- `BAG_Pipeline.Rmd` — reproducible pipeline (synthetic data by default but can be run with real data - instructions below)
 
 ## Quick start
 1. Install dependencies (recommended):
