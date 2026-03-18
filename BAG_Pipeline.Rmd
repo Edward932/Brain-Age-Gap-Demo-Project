@@ -1,8 +1,9 @@
 ---
 title: "Effect of Walking Fitness on Brain Health"
 author: "Edward Huffstetler"
-output: html_document
 date: "2026-03-17"
+output:
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -27,7 +28,7 @@ This notebook assumes packages are installed. If you cloned the repo, the recomm
 install.packages("renv"); renv::restore()
 
 ```{r load packages and set seed, echo=FALSE, message=FALSE, warning=FALSE}
-required = c("dplyr","knitr","glmnet","ggplot2","xgboost",
+required = c("rmarkdown","yaml", "dplyr","knitr","glmnet","ggplot2","xgboost",
               "mlr3","mlr3mbo","mlr3learners")
 
 missing = required[!vapply(required, requireNamespace, logical(1), quietly = TRUE)]
@@ -38,6 +39,8 @@ if (length(missing)) {
        paste0('"', missing, '"', collapse = ", "), "))")
 }
 
+library(rmarkdown)
+library(yaml)
 library(dplyr)
 library(knitr)
 library(glmnet)
