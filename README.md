@@ -4,7 +4,7 @@ This repo contains a small demo project that predicts chronological age from MRI
 
 **Recommended Use**
 
-See `BAG_Summary.pdf` for a short, report-like summary and explanation of the project. Then view `BAG_Pipeline.html` to see the R pipeline. If you would like to run the code yourself, clone the repo and follow the guide below.
+See `BAG_Summary.pdf` for a short, report-like summary and explanation of the project. Then download and open `BAG_Pipeline.html` in your browser to view the R pipeline, since GitHub may not display the file properly in-browser. If you would like to run the code yourself, clone the repo and follow the guide below.
 
 **Main artifacts**
 - `BAG_Summary.pdf` — short results summary
