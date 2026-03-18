@@ -7,7 +7,8 @@ This repo contains a small demo project that predicts chronological age from MRI
 - `BAG_Pipeline.html` - pre-rendered HTML report (synthetic data and opens without running code)
 - `BAG_Pipeline.Rmd` — reproducible pipeline (synthetic data by default but can be run with real data - instructions below)
 
-## Quick start
+## Guide To Run BAG_Pipeline.Rmd
+This guide is only for `BAG_Pipeline.Rmd`. `BAG_Summary.pdf` and `BAG_Pipeline.html` don't require running any code.
 1. Install dependencies (recommended):
    - `install.packages("renv")`
    - `renv::restore()`
@@ -18,7 +19,7 @@ By default the pipeline uses synthetic data (no DUA data required). To run on re
 **Runtime note:** `FAST_MODE <- TRUE` loads cached XGBoost CV results to keep knitting fast. Set `FAST_MODE <- FALSE` to recompute XGBoost CV (may take a few minutes).
 
 ## Outputs
-Knitting `BAG_Pipeline.Rmd` produces an HTML report with model performance plots (Elastic Net and XGBoost), calibration diagnostics, BAG–age correlation checks, a partial-effect plot for 2-minute walk distance, and a small effect-size table.
+Knitting `BAG_Pipeline.Rmd` produces an HTML report with model performance plots (Elastic Net and XGBoost), a partial-effect plot for 2-minute walk distance, and a small effect-size table.
 
 ## Notes on data access (real data)
 Raw AABC files are not included due to a data-use agreement. Access typically requires creating a BALSA account and accepting the AABC terms.
