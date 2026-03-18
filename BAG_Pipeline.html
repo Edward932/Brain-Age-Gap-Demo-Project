@@ -374,8 +374,7 @@ graphs will not match BAG_Summary.PDF.</p>
 <h1>Setup</h1>
 <p>This notebook assumes packages are installed. If you cloned the repo,
 the recommended way to install the same package versions is:</p>
-<p>install.packages(“renv”); renv::restore()</p>
-<p>Then select option 1 (recommended)</p>
+<p>install.packages(“renv”); renv::activate(); renv::restore()</p>
 </div>
 <div id="data-loading" class="section level1">
 <h1>Data Loading</h1>
@@ -712,11 +711,11 @@ if (VIEW_DEMO_OF_HYPERPARAMATER_OPTIMIZATION) {
 ## [1] stats     graphics  grDevices datasets  utils     methods   base     
 ## 
 ## other attached packages:
-##  [1] mlr3learners_0.14.0 mlr3mbo_1.0.0       mlr3tuning_1.5.1   
-##  [4] paradox_1.0.1       mlr3_1.5.0          xgboost_3.2.0.1    
-##  [7] ggplot2_4.0.2       glmnet_4.1-10       Matrix_1.7-4       
-## [10] knitr_1.51          dplyr_1.2.0         yaml_2.3.12        
-## [13] rmarkdown_2.30     
+##  [1] stringi_1.8.7       stringr_1.6.0       mlr3learners_0.14.0
+##  [4] mlr3mbo_1.1.0       mlr3tuning_1.5.1    paradox_1.0.1      
+##  [7] mlr3_1.5.0          xgboost_3.2.1.1     ggplot2_4.0.2      
+## [10] glmnet_4.1-10       Matrix_1.7-4        knitr_1.51         
+## [13] dplyr_1.2.0         yaml_2.3.12         rmarkdown_2.30     
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] sass_0.4.10          future_1.69.0        generics_0.1.4      

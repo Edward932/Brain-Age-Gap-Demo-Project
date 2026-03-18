@@ -25,9 +25,8 @@ Because the raw AABC data are governed by a data-use agreement, this Rmd runs by
 
 This notebook assumes packages are installed. If you cloned the repo, the recommended way to install the same package versions is:
 
-install.packages("renv"); renv::restore()
+install.packages("renv"); renv::activate(); renv::restore()
 
-Then select option 1 (recommended)
 
 ```{r load packages and set seed, echo=FALSE, message=FALSE, warning=FALSE}
 required = c("rmarkdown","yaml", "dplyr","knitr","glmnet","ggplot2","xgboost",
@@ -51,6 +50,8 @@ library(xgboost)
 library(mlr3)
 library(mlr3mbo)
 library(mlr3learners)
+library(stringr)
+library(stringi)
 ```
 
 # Data Loading
