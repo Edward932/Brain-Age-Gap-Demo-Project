@@ -374,7 +374,8 @@ graphs will not match BAG_Summary.PDF.</p>
 <h1>Setup</h1>
 <p>This notebook assumes packages are installed. If you cloned the repo,
 the recommended way to install the same package versions is:</p>
-<p>install.packages(“renv”); renv::activate(); renv::restore()</p>
+<p>install.packages(“renv”); library(renv); renv::load();
+renv::restore(prompt = FALSE)</p>
 </div>
 <div id="data-loading" class="section level1">
 <h1>Data Loading</h1>
