@@ -11,8 +11,6 @@ This repo contains a small demo project that predicts chronological age from MRI
 This guide is only for `BAG_Pipeline.Rmd`. `BAG_Summary.pdf` and `BAG_Pipeline.html` don't require running any code.
 1. Install dependencies (recommended):
    - `install.packages("renv")`
-   - `library(renv)`
-   - `renv::load()`
    - `renv::restore(prompt = FALSE)`
 2. Knit `BAG_Pipeline.Rmd` to HTML.
 
