@@ -12,6 +12,7 @@ This guide is only for `BAG_Pipeline.Rmd`. `BAG_Summary.pdf` and `BAG_Pipeline.h
 1. Install dependencies (recommended):
    - `install.packages("renv")`
    - `renv::restore()`
+   - Select option 1 (recommended) 
 2. Knit `BAG_Pipeline.Rmd` to HTML.
 
 By default the pipeline uses synthetic data (no DUA data required). To run on real data, set `USE_SYNTHETIC_DATA <- FALSE` after following the instructions below.
