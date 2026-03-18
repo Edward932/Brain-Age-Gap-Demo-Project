@@ -1,5 +1,6 @@
 ---
 title: "Effect of Walking Fitness on Brain Health"
+author: "Edward Huffstetler"
 output: html_document
 date: "2026-03-17"
 ---
@@ -12,11 +13,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-This markdown file is the reproducible demo pipeline for the Brain Age Gap (BAG) analysis summarized in [name of file].PDF. It trains an Elastic Net and XGBoost model to predict age from \~1,400 MRI-derived summary measures. It then computes BAG (predicted age - true age) and tests whether two-minute walk distance is associated with BAG.
+Github repository contains summary PDF (results only/no code), and instructions for how to run pipeline with real data:
+https://github.com/Edward932/Brain-Age-Gap-Demo-Project
 
-Because the raw AABC data are governed by a data-use agreement, this Rmd runs by default using synthetic data that mimics the structure of the real dataset. To use the real data follow the instructions in the README.
+This markdown file is the reproducible demo pipeline for the Brain Age Gap (BAG) analysis summarized in Bag_Summary.PDF. It trains an Elastic Net and XGBoost model to predict age from \~1,400 MRI-derived summary measures. It then computes BAG (predicted age - true age) and tests whether two-minute walk distance is associated with BAG.
 
-If you use synthetic data (the default option) the charts and graphs will not match the [name of file].PDF.
+Because the raw AABC data are governed by a data-use agreement, this Rmd runs by default using synthetic data that mimics the structure of the real dataset. To use the real data follow the instructions in the README. If you use synthetic data (the default option) the charts and graphs will not match BAG_Summary.PDF.
 
 # Setup
 
@@ -77,6 +79,8 @@ MRI_df = df_list$MRI
 First, we fit an Elastic Net model to predict chronological age from MRI summary measurements. Predictions are generated out-of-fold via cross-validation to avoid leakage. These out-of-fold predictions are then used to compute BAG.
 
 Because brain-age models often show age-dependent bias, we also apply a simple linear calibration of predicted age on true age using out-of-fold predictions, and then compute calibrated BAG. This calibration is intended to remove age dependence in BAG and may not improve RMSE.
+
+For downstream analysis BAG is calculated for each patient, so data is not split into training and testing. Instead out-of-fold predictions are calculated for each patient.
 
 ```{r elastic net}
 # Separating data into age (y_ridge) and MRI measurements (x_ridge) for training a elastic net model to predict age based on MRI data
@@ -244,7 +248,7 @@ ggplot(df_corr_xgb, mapping = aes(x = y_true, y = y_pred)) +
 
 # Downstream analysis
 
-For downstream, analysis we opted to use the calibrated Elastic Net BAGs. Both models had a similar RMSE but Elastic Net was more consistent.
+For downstream, analysis we opted to use the calibrated Elastic Net BAGs. Both models had a similar RMSE (with the real data) but Elastic Net was more consistent.
 
 We tested whether a higher two-minute walk distance is associated with calibrated brain age gap. We fit a multivariable linear regression with calibrated BAG as the outcome and two-minute walk distance as the primary predictor, adjusting for age, sex, BMI, education, and blood pressure.
 
@@ -270,7 +274,7 @@ coefs = coef(summary(bag_fit))
 # Create a grid of walk distances
 xgrid = seq(min(attributes_df$two_min_walk), max(attributes_df$two_min_walk), length.out = 200)
 
-# Calculating holds for other variables at mean for numerica and mode for catagorical
+# Calculating holds for other variables at mean for numerical and mode for categorical
 sex_freq = sort(table(attributes_df$sex), decreasing = TRUE)
 mode_sex = rownames(sex_freq)[[1]]
 edu_freq = sort(table(attributes_df$education), decreasing = TRUE)
@@ -354,7 +358,9 @@ kable(df_for_table, digits = 2, caption = "Association between 2-minute walk dis
 
 ```
 
-# Appendix: XGBoost hyperparameter optimization (optional)
+# Appendix
+
+## XGBoost hyperparameter optimization (optional)
 
 This section reproduces the model-based hyperparameter search used to select XGBoost parameters. It is turned off by default because it can take substantial time to run.
 
@@ -408,4 +414,9 @@ if (VIEW_DEMO_OF_HYPERPARAMATER_OPTIMIZATION) {
   print(tuner$optimize(instance))
   print(instance$result)
 }
+```
+## Session Info
+
+```{r session info}
+sessionInfo()
 ```

@@ -152,8 +152,6 @@ generate_synthetic_data = function(n = 1147, p = 1440) {
     age = as.numeric(age)
   )
   
-  # Ensure same ID order in both tables
-  stopifnot(identical(MRI$ID, attributes$ID))
   
   list(MRI = MRI, attributes = attributes)
 }

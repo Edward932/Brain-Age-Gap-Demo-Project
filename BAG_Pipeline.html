@@ -9,6 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Edward Huffstetler" />
 
 <meta name="date" content="2026-03-17" />
 
@@ -351,22 +352,24 @@ display: none;
 
 <h1 class="title toc-ignore">Effect of Walking Fitness on Brain
 Health</h1>
+<h4 class="author">Edward Huffstetler</h4>
 <h4 class="date">2026-03-17</h4>
 
 </div>
 
 
+<p>Github repository contains summary PDF (results only/no code), and
+instructions for how to run pipeline with real data: <a href="https://github.com/Edward932/Brain-Age-Gap-Demo-Project" class="uri">https://github.com/Edward932/Brain-Age-Gap-Demo-Project</a></p>
 <p>This markdown file is the reproducible demo pipeline for the Brain
-Age Gap (BAG) analysis summarized in [name of file].PDF. It trains an
+Age Gap (BAG) analysis summarized in Bag_Summary.PDF. It trains an
 Elastic Net and XGBoost model to predict age from ~1,400 MRI-derived
 summary measures. It then computes BAG (predicted age - true age) and
 tests whether two-minute walk distance is associated with BAG.</p>
 <p>Because the raw AABC data are governed by a data-use agreement, this
 Rmd runs by default using synthetic data that mimics the structure of
 the real dataset. To use the real data follow the instructions in the
-README.</p>
-<p>If you use synthetic data (the default option) the charts and graphs
-will not match the [name of file].PDF.</p>
+README. If you use synthetic data (the default option) the charts and
+graphs will not match BAG_Summary.PDF.</p>
 <div id="setup" class="section level1">
 <h1>Setup</h1>
 <p>This notebook assumes packages are installed. If you cloned the repo,
@@ -408,6 +411,9 @@ a simple linear calibration of predicted age on true age using
 out-of-fold predictions, and then compute calibrated BAG. This
 calibration is intended to remove age dependence in BAG and may not
 improve RMSE.</p>
+<p>For downstream analysis BAG is calculated for each patient, so data
+is not split into training and testing. Instead out-of-fold predictions
+are calculated for each patient.</p>
 <pre class="r"><code># Separating data into age (y_ridge) and MRI measurements (x_ridge) for training a elastic net model to predict age based on MRI data
 y_ridge = MRI_df$age
 x_ridge = as.matrix(MRI_df[ , !(names(MRI_df) %in% c(&quot;ID&quot;, &quot;age&quot;))])
@@ -517,8 +523,8 @@ RMSE_corr_xgb = sqrt(mean((pred_oof_corr_xgb - y_xgb)^2))</code></pre>
 <div id="downstream-analysis" class="section level1">
 <h1>Downstream analysis</h1>
 <p>For downstream, analysis we opted to use the calibrated Elastic Net
-BAGs. Both models had a similar RMSE but Elastic Net was more
-consistent.</p>
+BAGs. Both models had a similar RMSE (with the real data) but Elastic
+Net was more consistent.</p>
 <p>We tested whether a higher two-minute walk distance is associated
 with calibrated brain age gap. We fit a multivariable linear regression
 with calibrated BAG as the outcome and two-minute walk distance as the
@@ -545,7 +551,7 @@ coefs = coef(summary(bag_fit))
 # Create a grid of walk distances
 xgrid = seq(min(attributes_df$two_min_walk), max(attributes_df$two_min_walk), length.out = 200)
 
-# Calculating holds for other variables at mean for numerica and mode for catagorical
+# Calculating holds for other variables at mean for numerical and mode for categorical
 sex_freq = sort(table(attributes_df$sex), decreasing = TRUE)
 mode_sex = rownames(sex_freq)[[1]]
 edu_freq = sort(table(attributes_df$education), decreasing = TRUE)
@@ -627,8 +633,10 @@ age gap (BAG)</caption>
 </tbody>
 </table>
 </div>
-<div id="appendix-xgboost-hyperparameter-optimization-optional" class="section level1">
-<h1>Appendix: XGBoost hyperparameter optimization (optional)</h1>
+<div id="appendix" class="section level1">
+<h1>Appendix</h1>
+<div id="xgboost-hyperparameter-optimization-optional" class="section level2">
+<h2>XGBoost hyperparameter optimization (optional)</h2>
 <p>This section reproduces the model-based hyperparameter search used to
 select XGBoost parameters. It is turned off by default because it can
 take substantial time to run.</p>
@@ -681,6 +689,54 @@ if (VIEW_DEMO_OF_HYPERPARAMATER_OPTIMIZATION) {
   print(tuner$optimize(instance))
   print(instance$result)
 }</code></pre>
+</div>
+<div id="session-info" class="section level2">
+<h2>Session Info</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.5.2 (2025-10-31)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Tahoe 26.3
+## 
+## Matrix products: default
+## BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## time zone: America/New_York
+## tzcode source: internal
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices datasets  utils     methods   base     
+## 
+## other attached packages:
+##  [1] mlr3learners_0.14.0 mlr3mbo_1.0.0       mlr3tuning_1.5.1   
+##  [4] paradox_1.0.1       mlr3_1.5.0          xgboost_3.2.0.1    
+##  [7] ggplot2_4.0.2       glmnet_4.1-10       Matrix_1.7-4       
+## [10] knitr_1.51          dplyr_1.2.0        
+## 
+## loaded via a namespace (and not attached):
+##  [1] sass_0.4.10          future_1.69.0        generics_0.1.4      
+##  [4] renv_1.1.8           shape_1.4.6.1        lattice_0.22-7      
+##  [7] spacefillr_0.4.0     listenv_0.10.0       digest_0.6.39       
+## [10] magrittr_2.0.4       evaluate_1.0.5       grid_4.5.2          
+## [13] RColorBrewer_1.1-3   iterators_1.0.14     fastmap_1.2.0       
+## [16] foreach_1.5.2        jsonlite_2.0.0       backports_1.5.0     
+## [19] survival_3.8-3       scales_1.4.0         codetools_0.2-20    
+## [22] palmerpenguins_0.1.1 jquerylib_0.1.4      cli_3.6.5           
+## [25] rlang_1.1.7          parallelly_1.46.1    splines_4.5.2       
+## [28] withr_3.0.2          cachem_1.1.0         yaml_2.3.12         
+## [31] tools_4.5.2          parallel_4.5.2       uuid_1.2-2          
+## [34] checkmate_2.3.4      globals_0.19.0       bbotk_1.9.0         
+## [37] vctrs_0.7.1          R6_2.6.1             lifecycle_1.0.5     
+## [40] mlr3misc_0.21.0      pkgconfig_2.0.3      pillar_1.11.1       
+## [43] bslib_0.10.0         gtable_0.3.6         glue_1.8.0          
+## [46] data.table_1.18.2.1  Rcpp_1.1.1           lgr_0.5.2           
+## [49] xfun_0.56            tibble_3.3.1         tidyselect_1.2.1    
+## [52] farver_2.1.2         htmltools_0.5.9      labeling_0.4.3      
+## [55] rmarkdown_2.30       compiler_4.5.2       S7_0.2.1</code></pre>
+</div>
 </div>
 
 
