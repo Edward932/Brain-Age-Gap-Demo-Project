@@ -2,6 +2,10 @@
 
 This repo contains a small demo project that predicts chronological age from MRI-derived summary measures (~1400 features), computes brain age gap (BAG = predicted age − true age), applies an age-bias calibration step, and tests whether walking endurance (2-minute walk distance) is associated with calibrated BAG after adjusting for covariates.
 
+**Recommended Use**
+
+See `BAG_Summary.pdf` for a short, report-like summary and explanation of the project. Then view `BAG_Pipeline.html` to see the R pipeline. If you would like to run the code yourself, clone the repo and follow the guide below.
+
 **Main artifacts**
 - `BAG_Summary.pdf` — short results summary
 - `BAG_Pipeline.html` - pre-rendered HTML report (synthetic data and opens without running code)
