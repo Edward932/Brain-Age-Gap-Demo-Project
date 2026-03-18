@@ -27,6 +27,8 @@ This notebook assumes packages are installed. If you cloned the repo, the recomm
 
 install.packages("renv"); renv::restore()
 
+Then select option 1 (recommended)
+
 ```{r load packages and set seed, echo=FALSE, message=FALSE, warning=FALSE}
 required = c("rmarkdown","yaml", "dplyr","knitr","glmnet","ggplot2","xgboost",
               "mlr3","mlr3mbo","mlr3learners")
